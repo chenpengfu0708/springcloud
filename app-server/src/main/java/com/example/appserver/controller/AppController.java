@@ -7,6 +7,7 @@ import com.example.commons.dto.response.CommonsResponse;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping(value = "/app")
@@ -24,7 +25,7 @@ public class AppController {
 
 
     @GetMapping(value = "/getUser")
-    public String getUser() {
+    public String getUser(HttpServletRequest request) {
         System.out.println(userFeign.getUser());
         System.out.println(userFeign.getUserByName("getUserByName"));
         System.out.println(userFeign.getUserByPost(new UserDto()));

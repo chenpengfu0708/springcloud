@@ -5,6 +5,8 @@ import com.example.userserver.feign.AppFeign;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+
 @RestController
 public class UserController {
 
@@ -13,7 +15,8 @@ public class UserController {
 
 
     @GetMapping(value = "/getUser")
-    public String getUser() {
+    public String getUser(HttpServletRequest request) {
+        System.out.println("token = " + request.getHeader("Authorization"));
         return "这是user服务";
     }
 

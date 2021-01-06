@@ -1,5 +1,6 @@
 package com.example.appserver.feign;
 
+import com.example.appserver.config.FeignConfig;
 import com.example.commons.dto.UserDto;
 import com.example.commons.dto.request.LoginRequestDto;
 import com.example.commons.dto.response.CommonsResponse;
@@ -11,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Component
-@FeignClient(name = "user-server")
+@FeignClient(name = "user-server", configuration = FeignConfig.class)
 public interface UserFeign {
 
     @GetMapping("/getUser")
