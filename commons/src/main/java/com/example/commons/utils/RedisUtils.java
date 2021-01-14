@@ -120,4 +120,11 @@ public class RedisUtils {
         redisTemplate.delete(lockKey);
     }
 
+    /**
+     * 刷新缓存时效
+     */
+    public void expireKey(String key, long timeout, TimeUnit timeUnit) {
+        redisTemplate.expire(key, timeout, timeUnit);
+    }
+
 }
