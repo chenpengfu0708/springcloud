@@ -8,6 +8,8 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.stereotype.Component;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 
@@ -125,6 +127,26 @@ public class RedisUtils {
      */
     public void expireKey(String key, long timeout, TimeUnit timeUnit) {
         redisTemplate.expire(key, timeout, timeUnit);
+    }
+
+    /**
+     * 保存map
+     */
+    public void setMap(String key, Map<String, String> map, long timeout, TimeUnit timeUnit) {
+        redisTemplate.opsForHash().putAll(key, map);
+        redisTemplate.expire(key, timeout, timeUnit);
+    }
+
+    /**
+     * 读取map
+     */
+    public Map<String, String> getMapByKey(String key) {
+        Map<Object, Object> result = redisTemplate.opsForHash().entries(key);
+        Map<String, String> map = new HashMap<>();
+        for (Object keyObject : result.keySet()) {
+            map.put(keyObject.toString(), result.get(keyObject).toString());
+        }
+        return map;
     }
 
 }

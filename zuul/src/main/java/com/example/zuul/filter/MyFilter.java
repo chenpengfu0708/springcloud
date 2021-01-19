@@ -12,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.Ordered;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
@@ -39,7 +40,7 @@ public class MyFilter extends ZuulFilter {
 
     @Override
     public int filterOrder() {
-        return 0;
+        return Ordered.HIGHEST_PRECEDENCE;
     }
 
     @Override

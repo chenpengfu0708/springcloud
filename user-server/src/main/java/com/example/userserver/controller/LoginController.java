@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
@@ -30,6 +32,10 @@ public class LoginController {
         if (user != null) {
             String token = UUID.randomUUID().toString().replaceAll("-", "");
             redisUtils.setKey(MyConstants.USER_TOKEN_KEY + token, token, 1L, TimeUnit.MINUTES);
+            Map<String, String> map = new HashMap<>();
+            map.put("id", user.getId().toString());
+            map.put("name", user.getName());
+            redisUtils.setMap("userMap:" + token, map, 1L, TimeUnit.DAYS);
             return new CommonsResponse().code(0).msg("登录成功").data(token);
         }
         return new CommonsResponse().code(-1).msg("登录失败");
