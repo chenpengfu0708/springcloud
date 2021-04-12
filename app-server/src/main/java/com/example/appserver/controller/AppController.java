@@ -4,11 +4,14 @@ import com.example.appserver.feign.UserFeign;
 import com.example.commons.dto.UserDto;
 import com.example.commons.dto.request.LoginRequestDto;
 import com.example.commons.dto.response.CommonsResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 
+@Slf4j
 @RestController
 @RequestMapping(value = "/app")
 public class AppController {
@@ -19,7 +22,14 @@ public class AppController {
     @GetMapping(value = "/getApp")
     public String getApp() {
         UserDto userDto = new UserDto();
-        System.out.println(userDto);
+        try {
+            long a = (long)(Math.random() * 4000);
+            log.info("a = " + a);
+            Thread.sleep(a);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        log.info(userDto.toString());
         return "这是app服务";
     }
 

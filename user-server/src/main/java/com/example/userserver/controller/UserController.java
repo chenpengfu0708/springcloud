@@ -2,11 +2,15 @@ package com.example.userserver.controller;
 
 import com.example.commons.dto.UserDto;
 import com.example.userserver.feign.AppFeign;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 
+@Slf4j
 @RestController
 public class UserController {
 
@@ -35,9 +39,15 @@ public class UserController {
         return userDto;
     }
 
+    @HystrixCommand(fallbackMethod = "feignCallBack")
     @GetMapping(value = "/getApp")
     public String getApp() {
+        log.info("===这是==getApp接口");
         return appFeign.getApp();
     }
 
+    public String feignCallBack() {
+        System.out.println("feign调用断路啦。。。。。");
+        return "feignCallBack:";
+    }
 }
